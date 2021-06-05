@@ -536,6 +536,7 @@ public final class Player implements
         binding.screenRotationButton.setOnClickListener(this);
         binding.playWithKodi.setOnClickListener(this);
         binding.openInBrowser.setOnClickListener(this);
+        binding.getUrlButton.setOnClickListener(this);
         binding.playerCloseButton.setOnClickListener(this);
         binding.switchMute.setOnClickListener(this);
 
@@ -953,6 +954,7 @@ public final class Player implements
             binding.share.setVisibility(View.GONE);
             binding.playWithKodi.setVisibility(View.GONE);
             binding.openInBrowser.setVisibility(View.GONE);
+            binding.getUrlButton.setVisibility(View.GONE);
             binding.switchMute.setVisibility(View.GONE);
             binding.playerCloseButton.setVisibility(View.GONE);
             binding.topControls.bringToFront();
@@ -974,6 +976,7 @@ public final class Player implements
                     R.drawable.ic_expand_more));
             binding.share.setVisibility(View.VISIBLE);
             binding.openInBrowser.setVisibility(View.VISIBLE);
+            binding.getUrlButton.setVisibility(View.VISIBLE);
             binding.switchMute.setVisibility(View.VISIBLE);
             binding.playerCloseButton.setVisibility(isFullscreen ? View.GONE : View.VISIBLE);
             // Top controls have a large minHeight which is allows to drag the player
@@ -3584,6 +3587,8 @@ public final class Player implements
             onPlayWithKodiClicked();
         } else if (v.getId() == binding.openInBrowser.getId()) {
             onOpenInBrowserClicked();
+        } else if (v.getId() == binding.getUrlButton.getId()) {
+            getUrlClicked();
         } else if (v.getId() == binding.fullScreenButton.getId()) {
             setRecovery();
             NavigationHelper.playOnMainPlayer(context, playQueue, true);
@@ -3730,6 +3735,12 @@ public final class Player implements
         if (currentMetadata != null) {
             ShareUtils.openUrlInBrowser(getParentActivity(),
                     currentMetadata.getMetadata().getOriginalUrl());
+        }
+    }
+
+    private void getUrlClicked() {
+        if (currentMetadata != null) {
+            ShareUtils.copyToClipboard(context, currentMetadata.getMetadata().getOriginalUrl());
         }
     }
     //endregion
